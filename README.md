@@ -1,2 +1,2 @@
 # PowerShell-UsefulFunctions
-Useful Random Functions
+A collection of Useful Functions and Scripts I use for PowerShell
