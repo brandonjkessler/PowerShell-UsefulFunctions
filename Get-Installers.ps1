@@ -63,7 +63,7 @@ function Get-InstallFile{
 	Write-Verbose -Message "Checking file matching $($filter) at $Path."
 	$installer = Get-ChildItem -Path "$Path" -Filter $filter | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
 	if($null -eq $installer){
-		Write-Error "Unable to locate an install that matches those arguments."
+		Throw "Unable to locate an install that matches those arguments."
 	} else {
 		Return $installer
 	}
