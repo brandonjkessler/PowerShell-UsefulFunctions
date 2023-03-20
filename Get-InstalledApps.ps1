@@ -17,13 +17,14 @@ function Get-InstalledAppsRegistry{
     #>
     [cmdletbinding()]
     Param(
+        [Alias("App")]
         [Parameter(Position=0,Mandatory=$true)]
-        [String]$App
+        [String]$Name
     )
 
     ## Create Arry of Applications
-    Write-Verbose -Message "Now searching for $App in the registry."
-    $Apps = Get-ItemProperty 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*','HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*' | Where-Object{$_.DisplayName -like "*$App*"} # 32 Bit
+    Write-Verbose -Message "Now searching for $Name in the registry."
+    $Apps = Get-ItemProperty 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*','HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*' | Where-Object{$_.DisplayName -like "*$Name*"} # 32 Bit
     Return $Apps
 
 }
@@ -47,11 +48,12 @@ function Get-InstalledAppsCim {
     #>
     [cmdletbinding()]
     Param(
+        [Alias("App")]
         [Parameter(Position=0,Mandatory=$true)]
-        [String]$App
+        [String]$Name
     )
 
-    Write-Verbose -Message "Now searching for $App in Win32_InstalledWin32Program Class."
-    $Apps = Get-CimInstance -ClassName Win32_InstalledWin32Program | Where-Object{$_.Name -match "$App"}
+    Write-Verbose -Message "Now searching for $Name in Win32_InstalledWin32Program Class."
+    $Apps = Get-CimInstance -ClassName Win32_InstalledWin32Program | Where-Object{$_.Name -match "$Name"}
     Return $Apps
 }
